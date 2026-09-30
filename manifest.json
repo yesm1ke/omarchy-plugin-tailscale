@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "io.github.yesm1ke.tailscale",
+  "name": "Tailscale (tray)",
+  "version": "1.0.0",
+  "author": "yesm1ke",
+  "license": "MIT",
+  "description": "Tailscale status, connection switching, machine browsing, and quick copy actions in the Omarchy bar. Wrapper around the stock omarchy.tailscale panel that hides with the system tray drawer.",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "Panel.qml"
+  },
+  "barWidget": {
+    "displayName": "Tailscale (tray)",
+    "description": "Toggle Tailscale, switch connections, browse machines, and copy machine IPs or names.",
+    "category": "Network",
+    "allowMultiple": false,
+    "defaultSection": "right",
+    "defaults": {
+      "refreshIntervalSec": 30,
+      "hideWithTray": true
+    },
+    "schema": [
+      {
+        "key": "refreshIntervalSec",
+        "type": "integer",
+        "label": "Refresh interval (seconds)",
+        "min": 5,
+        "max": 3600,
+        "step": 5,
+        "defaultValue": 30
+      },
+      {
+        "key": "hideWithTray",
+        "type": "boolean",
+        "label": "Hide the icon with the system tray drawer",
+        "defaultValue": true
+      }
+    ]
+  }
+}
