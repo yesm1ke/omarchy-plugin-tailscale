@@ -6,11 +6,6 @@ The stock Omarchy Tailscale widget, unchanged, except that its bar icon hides
 together with the system tray drawer: it stays collapsed until you hover the
 tray's `‹` chevron, then slides out next to the tray icons.
 
-Nothing of the stock widget is copied. `Panel.qml` imports the packaged
-`omarchy.tailscale` panel from `/usr/share/omarchy` and only overrides the
-size of its bar icon, so every Omarchy update to the Tailscale widget applies
-here as is.
-
 ## Install
 
 ```sh
@@ -43,6 +38,26 @@ Requires Omarchy 4 with Tailscale set up (`omarchy install service tailscale`).
 omarchy bar set io.github.yesm1ke.tailscale hideWithTray false --json
 ```
 
+## Staying current with Omarchy
+
+This is a copy of the stock widget with the change above on top. Until Omarchy
+4.0.5 it was a wrapper that imported the packaged `omarchy.tailscale` panel from `/usr/share/omarchy`
+and copied nothing, but with Qt 6.12 such an import no longer works when the
+stock file declares inline components (`component Foo: …`; the widget fails to
+load with "Foo is not a type"), so it became a copy. The repository keeps
+Omarchy's files and ours apart:
+
+- branch `upstream` holds the stock files exactly as Omarchy ships them, one
+  commit per Omarchy version that changed them;
+- branch `main` is `upstream` plus the change described above (`Panel.qml`, marked `io.github.yesm1ke`, around the root's size).
+
+After an Omarchy update, run `./sync-upstream` in the installed plugin
+(`~/.config/omarchy/plugins/<id>/`). It records the installed stock files on
+`upstream` and merges them into `main`; on a conflict it aborts the merge and
+leaves everything as it was, to be resolved with `git merge upstream`.
+`./sync-upstream --check` only reports whether anything changed. It can be run
+automatically from an Omarchy `post-update` hook.
+
 ## How it works
 
 `TrayFollower.qml` finds the tray (`io.github.yesm1ke.tray` or the stock
@@ -50,8 +65,7 @@ omarchy bar set io.github.yesm1ke.tailscale hideWithTray false --json
 and mirrors the tray's `expanded` state. That relies on bar internals
 (`ModuleSlot.moduleName` / `activeItem` / `hovered`, `Tray.expanded`); if a
 future Omarchy changes them, the helper cannot find the tray and the icon
-simply stays visible. The wrapper also relies on the stock panel living at
-`/usr/share/omarchy/shell/plugins/panels/tailscale/`.
+simply stays visible.
 
 The stock `omarchy.tray` hides itself, chevron included, while no app has a
 tray icon; the icon then has nothing to reveal it and stays visible. Use
@@ -60,4 +74,5 @@ place of `omarchy.tray` to keep the chevron in that case.
 
 ## License
 
-MIT, see [LICENSE](LICENSE).
+MIT, see [LICENSE](LICENSE). Based on the Omarchy Tailscale panel, © David
+Heinemeier Hansson, MIT.

@@ -39,5 +39,8 @@
         "defaultValue": true
       }
     ]
+  },
+  "omarchy": {
+    "clonedFrom": "omarchy.tailscale"
   }
 }
