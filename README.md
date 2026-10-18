@@ -1,5 +1,7 @@
 # Tailscale for the Omarchy bar, hidden in the tray drawer
 
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-support-FF5E5B?logo=ko-fi&logoColor=white)](https://ko-fi.com/mike_g)
+
 The stock Omarchy Tailscale widget, unchanged, except that its bar icon hides
 together with the system tray drawer: it stays collapsed until you hover the
 tray's `‹` chevron, then slides out next to the tray icons.
